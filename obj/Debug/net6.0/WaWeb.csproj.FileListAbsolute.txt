@@ -1,0 +1,12 @@
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\bin\Debug\net6.0\WaWeb.deps.json
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\bin\Debug\net6.0\WaWeb.dll
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\bin\Debug\net6.0\WaWeb.pdb
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.csproj.AssemblyReference.cache
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.AssemblyInfoInputs.cache
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.AssemblyInfo.cs
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.csproj.CoreCompileInputs.cache
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.dll
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\refint\WaWeb.dll
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\WaWeb.pdb
+C:\Users\Ershad Raoufi\Desktop\oout\WaWeb\obj\Debug\net6.0\ref\WaWeb.dll

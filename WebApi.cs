@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web;
 using Newtonsoft.Json;
 using WaWeb.Models;
 using WaWeb.Models.Proxy;
@@ -15,6 +16,7 @@ namespace WaWeb
         #region Field
         private readonly HttpClient _client;
         private TOutPut _result;
+        private string _baseUrl;
         #endregion
 
         #region Ctor
@@ -24,9 +26,10 @@ namespace WaWeb
             bool useProxy = false,
             ProxyInfo? proxyInfo = null)
         {
+            _baseUrl = baseUrl;
             timeOut ??= TimeSpan.FromSeconds(30);
             _result = new TOutPut();
-            HttpClientHandler httpClientHandler = new();
+            HttpClientHandler httpClientHandler = new() ;
             httpClientHandler.UseProxy = useProxy;
             if (useProxy)
             {
@@ -54,7 +57,7 @@ namespace WaWeb
                     // First create a proxy object
                     WebProxy proxySelected = new()
                     {
-                        Address = new Uri($"{proxy.ip}:{proxy.port}"),
+                        Address = new Uri($"{proxy.protocols[0]}://{proxy.ip}:{proxy.port}"),
                         BypassProxyOnLocal = false,
                         UseDefaultCredentials = false,
                     };
@@ -77,14 +80,14 @@ namespace WaWeb
         /// </summary>
         /// <param name="proxyRepository">do you have custom proxy List enter the url of this</param>
         /// <returns></returns>
-        private async Task<ProxyItem> GetProxyList(
+        public static async Task<ProxyItem?> GetProxyList(
             string proxyRepository = "")
         {
-            var proxyUrl = "https://proxylist.geonode.com/api/proxy-list?limit=3&page=1&sort_by=lastChecked&sort_type=desc&speed=fast&protocols=http%2Chttps";
+            var proxyUrl = "https://proxylist.geonode.com/";
             if (!string.IsNullOrEmpty(proxyRepository))
                 proxyUrl = proxyRepository;
             var api = new WebApi<ProxyResult, object>(baseUrl: proxyUrl);
-            var list = await api.CallApi(new(), "");
+            var list = await api.CallApi(new(), "api/proxy-list?limit=3&page=1&sort_by=lastChecked&sort_type=desc&speed=fast&protocols=http%2Chttps");
             return list?.data?.MinBy(x => x.speed);
         }
         public void Dispose()
@@ -101,16 +104,13 @@ namespace WaWeb
             if (string.IsNullOrEmpty(api))
                 throw new Exception("Please set string of api for endpoint");
 
-            if (!api.StartsWith("/"))
-            {
-                api = $"/{api}";
-            }
-            Uri uri = new(api);
+            
+            //api = HttpUtility.UrlEncode(api,Encoding.UTF8);
             if (httpMethod == HttpMethods.GET)
             {
                 try
                 {
-                    var response = await _client.GetAsync(uri);
+                    var response = await _client.GetAsync(api);
                     if (response.IsSuccessStatusCode)
                     {
                         var content = await response.Content.ReadAsStringAsync();
@@ -136,13 +136,13 @@ namespace WaWeb
                     switch (httpMethod)
                     {
                         case HttpMethods.POST:
-                            response = await _client.PostAsync(uri, parameter);
+                            response = await _client.PostAsync(api, parameter);
                             break;
                         case HttpMethods.PUT:
-                            response = await _client.PutAsync(uri, parameter);
+                            response = await _client.PutAsync(api, parameter);
                             break;
                         case HttpMethods.DELETE:
-                            response = await _client.DeleteAsync(uri);
+                            response = await _client.DeleteAsync(api);
                             break;
                         default:
                             response = new HttpResponseMessage();

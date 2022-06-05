@@ -21,7 +21,7 @@ namespace WaWeb.Models.Proxy
         //public double latency { get; set; }
         //public string org { get; set; }
         public string port { get; set; }
-        //public List<string> protocols { get; set; }
+        public List<string> protocols { get; set; }
         //public string region { get; set; }
         //public string responseTime { get; set; }
         public int speed { get; set; }
